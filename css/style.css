@@ -364,7 +364,7 @@ html::-webkit-scrollbar-thumb{
    opacity: .5;
    margin-bottom: 4rem;
 /*    background-image: url(../images/species-preview.jpg); */
-   background: var(--brown)
+   background: var(--brown);
    object-fit: cover;
 }
 
@@ -382,7 +382,7 @@ html::-webkit-scrollbar-thumb{
    transform: scale(1);
    opacity: 1;
 /*    background-image: url(../images/species-preview.jpg); */
-   background: var(--brown)
+   background: var(--brown);
    object-fit: cover;
    
 }
