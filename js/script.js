@@ -36,33 +36,41 @@ let places = document.querySelectorAll(".place-list li");
 let active = "images/home-bg-1.jpg images/home-image-1.png";
 let images = document.querySelectorAll(".image1, .image2, .image3");
 
-places.forEach((place) => {
-  const handleEvent = (event) => {
-    places.forEach((p) => p.classList.remove("active"));
-    event.target.classList.add("active");
-    active = event.target.getAttribute("data-img");
-    let banner = document.querySelector(".banner");
-    banner.style.backgroundImage = `url('${active}')`;
+let currentIndex = 0; 
+let banner = document.querySelector(".banner");
 
-    images.forEach((img) => {
-      img.classList.remove("active");
-    });
+function activatePlace(index) {
+  places.forEach((e, i) => {
+    e.classList.toggle("active", i === index);
+  });
 
-    let index = event.target.getAttribute("data-index");
-    let correspondingImage = document.querySelector(`.image${index}`);
-    correspondingImage.classList.add("active");
-    correspondingImage.style.opacity = "0";
+  let activePlace = places[index];
+  active = activePlace.getAttribute("data-img");
+  banner.style.backgroundImage = `url('${active}')`;
 
-    setTimeout(() => {
-      correspondingImage.style.opacity = "1";
-      correspondingImage.style.transform = "translateY(0)";
-    }, 50);
-  };
+  images.forEach((img, i) => {
+    img.classList.toggle("active", i === index);
+    if (i === index) {
+      img.style.opacity = "0";
+      setTimeout(() => {
+        img.style.opacity = "1";
+        img.style.transform = "translateY(0)";
+      }, 50);
+    }
+  });
+}
 
-  // Add event listeners for both `mouseenter` and `touchstart`
-  place.addEventListener("mouseenter", handleEvent);
-  place.addEventListener("touchstart", handleEvent, { passive: true });
+places.forEach((e, index) => {
+  e.addEventListener("mouseenter", () => {
+    activatePlace(index);
+  });
 });
+
+setInterval(() => {
+  currentIndex = (currentIndex + 1) % places.length;
+  activatePlace(currentIndex);
+}, 5000); 
+
 
 var swiper = new Swiper(".species-slider", {
   grabCursor: false,
